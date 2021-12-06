@@ -29,7 +29,7 @@ app.get("/api/whoami", function (req, res) {
   const userAgent = req.get("User-Agent");
   const userIP = req.ip;
   res.json({
-    ip: userIP,
+    ipaddress: userIP,
     language: language,
     software: userAgent,
   });
