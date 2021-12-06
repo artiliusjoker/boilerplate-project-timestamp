@@ -24,17 +24,20 @@ app.get("/api/hello", function (req, res) {
 });
 
 // get timestamp
-app.get("/api/:inputDate", function (req, res) {
+app.get("/api/:inputDate?", function (req, res) {
   const input = /^[0-9]*$/.test(req.params.inputDate)
     ? Number(req.params.inputDate)
     : req.params.inputDate;
-  const inputDate = new Date(input);
+  let inputDate = new Date(input);
 
-  if (isNaN(inputDate)) {
+  if (isNaN(inputDate) && input != undefined) {
     res.json({ error: "Invalid Date" });
     return;
   }
 
+  if (input === undefined) {
+    inputDate = new Date();
+  }
   const unix = inputDate.getTime();
   const utc = inputDate.toUTCString();
   res.json({ unix: unix, utc: utc });
